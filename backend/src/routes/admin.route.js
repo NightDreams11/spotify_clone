@@ -1,9 +1,9 @@
 import { Router } from "express"
-import { getAdmin } from "../controller/admin.controller.js"
+import { createSong } from "../controller/admin.controller.js"
 import { portectRoute, requireAdmin } from "../middleware/auth.middleware.js"
 
 const router = Router()
 
-router.get("/", portectRoute, requireAdmin, getAdmin)
+router.post("/songs", portectRoute, requireAdmin, createSong)
 
 export default router
