@@ -1,6 +1,6 @@
 import { clerkClient } from "@clerk/express"
 
-export const portectRoute = async (req, res, next) => {
+export const protectRoute = async (req, res, next) => {
   if (!req.auth.userId) {
     return res
       .status(401)
