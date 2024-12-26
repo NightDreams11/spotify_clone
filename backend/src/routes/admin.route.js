@@ -6,11 +6,11 @@ import {
   deleteAlbum,
   deleteSong,
 } from "../controller/admin.controller.js"
-import { portectRoute, requireAdmin } from "../middleware/auth.middleware.js"
+import { protectRoute, requireAdmin } from "../middleware/auth.middleware.js"
 
 const router = Router()
 
-router.use(portectRoute, requireAdmin)
+router.use(protectRoute, requireAdmin)
 
 router.get("/check", checkAdmin)
 

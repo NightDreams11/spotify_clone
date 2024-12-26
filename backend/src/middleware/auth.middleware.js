@@ -1,4 +1,7 @@
 import { clerkClient } from "@clerk/express"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 export const protectRoute = async (req, res, next) => {
   if (!req.auth.userId) {
