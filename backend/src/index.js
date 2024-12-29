@@ -10,6 +10,7 @@ import statRoutes from "./routes/stat.route.js"
 import { connectDB } from "./lib/db.js"
 import fileupload from "express-fileupload"
 import path from "path"
+import cors from "cors"
 
 // Witout it the PORT will be undefined.
 dotenv.config()
@@ -17,7 +18,14 @@ dotenv.config()
 const __dirname = path.resolve()
 
 const app = express()
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 5000
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+)
 
 app.use(express.json()) // to parse req.body
 app.use(clerkMiddleware()) // this will add auth to req obj => req.auth.userId
@@ -42,7 +50,6 @@ app.use("/api/stats", statRoutes)
 
 // error handler
 app.use((err, req, res, next) => {
-  console.log("123")
   res.status(500).json({
     message:
       process.env.NODE_ENV === "production"

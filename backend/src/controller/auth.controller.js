@@ -14,7 +14,6 @@ export const authCallback = async (req, res, next) => {
         fullName: `${firstName}, ${lastName}`,
         imageUrl,
       })
-
       res.status(200).json({ success: true })
     }
   } catch (error) {
