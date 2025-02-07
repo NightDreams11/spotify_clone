@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/lib/axios"
+import { useAuthtStore } from "@/stores/useAuthStore"
 import { useAuth } from "@clerk/clerk-react"
 import { Loader } from "lucide-react"
 import { FC, useEffect, useState } from "react"
@@ -19,12 +20,17 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   const { getToken } = useAuth()
+  const { checkAdminStatus } = useAuthtStore()
 
   useEffect(() => {
     const initAuth = async () => {
       try {
         const token = await getToken()
         updateApiToken(token)
+
+        if (token) {
+          await checkAdminStatus()
+        }
       } catch (error) {
         updateApiToken(null)
         console.log("Error in auth provider", error)
