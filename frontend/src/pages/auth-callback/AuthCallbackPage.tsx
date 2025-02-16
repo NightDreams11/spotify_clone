@@ -11,18 +11,26 @@ export const AuthCallbackPage = () => {
   const syncAttempted = useRef(false)
 
   useEffect(() => {
+    const controller = new AbortController()
+
     const syncUser = async () => {
       if (!isLoaded || !user || syncAttempted.current) return
 
       try {
         syncAttempted.current = true // to avoid creating a user twice
 
-        await axiosInstance.post("/auth/callback", {
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          imageUrl: user.imageUrl,
-        })
+        await axiosInstance.post(
+          "/auth/callback",
+          {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            imageUrl: user.imageUrl,
+          },
+          {
+            signal: controller.signal,
+          }
+        )
       } catch (error) {
         console.log("Error in auth callback", error)
       } finally {
@@ -31,6 +39,10 @@ export const AuthCallbackPage = () => {
     }
 
     syncUser()
+
+    return () => {
+      controller.abort()
+    }
   }, [isLoaded, user, navigate])
 
   return (
