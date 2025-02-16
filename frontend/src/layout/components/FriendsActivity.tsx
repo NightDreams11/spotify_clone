@@ -16,7 +16,7 @@ export const FriendsActivity = () => {
     if (user) {
       fetchUsers()
     }
-  }, [user, users, fetchUsers])
+  }, [user, fetchUsers])
 
   return (
     <div className="h-full bg-zinc-900 rounded-lg flex flex-col">
