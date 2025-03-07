@@ -1,23 +1,15 @@
-import FeaturedGridSkeleton from "@/components/skeletons/FeaturedGridSkeleton"
-import { Button } from "@/components/ui/button"
 import { Song } from "@/types"
-import { FC } from "react"
+import { Button } from "@/components/ui/button"
 import { PlayButton } from "./PlayButton"
+import FeaturedGridSkeleton from "@/components/skeletons/FeaturedGridSkeleton"
 
 type SectionGridProps = {
   title: string
   songs: Song[]
   isLoading: boolean
 }
-
-export const SectionGrid: FC<SectionGridProps> = ({
-  title,
-  songs,
-  isLoading,
-}) => {
-  if (isLoading) {
-    return <FeaturedGridSkeleton />
-  }
+export const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
+  if (isLoading) return <FeaturedGridSkeleton />
 
   return (
     <div className="mb-8">
@@ -30,6 +22,7 @@ export const SectionGrid: FC<SectionGridProps> = ({
           Show all
         </Button>
       </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {songs.map((song) => (
           <div
