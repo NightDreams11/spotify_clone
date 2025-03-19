@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Song } from "@/types"
 import { Button } from "@/components/ui/button"
 import { PlayButton } from "./PlayButton"
@@ -8,7 +9,10 @@ type SectionGridProps = {
   songs: Song[]
   isLoading: boolean
 }
+
 export const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
+  const [visibleCount] = useState(4)
+
   if (isLoading) return <FeaturedGridSkeleton />
 
   return (
@@ -24,7 +28,7 @@ export const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {songs.map((song) => (
+        {songs.slice(0, visibleCount).map((song) => (
           <div
             key={song._id}
             className="bg-zinc-800/40 p-4 rounded-md hover:bg-zinc-700/40 transition-all group cursor-pointer"
@@ -35,7 +39,7 @@ export const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
                   src={song.imageUrl}
                   alt={song.title}
                   className="w-full h-full object-cover transition-transform duration-300 
-									group-hover:scale-105"
+                  group-hover:scale-105"
                 />
               </div>
               <PlayButton song={song} />
