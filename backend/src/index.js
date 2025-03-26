@@ -11,6 +11,8 @@ import { connectDB } from "./lib/db.js"
 import fileupload from "express-fileupload"
 import path from "path"
 import cors from "cors"
+import { createServer } from "http"
+import { initializeSocket } from "./lib/socket.js"
 
 // Witout it the PORT will be undefined.
 dotenv.config()
@@ -19,6 +21,9 @@ const __dirname = path.resolve()
 
 const app = express()
 const PORT = process.env.PORT || 5000
+
+const httpServer = createServer(app)
+initializeSocket(httpServer)
 
 app.use(
   cors({
@@ -58,7 +63,7 @@ app.use((err, req, res, next) => {
   })
 })
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
   connectDB()
 })
