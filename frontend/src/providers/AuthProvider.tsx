@@ -3,7 +3,6 @@ import { useAuthtStore } from "@/stores/useAuthStore"
 import { useChatStore } from "@/stores/useChatStore"
 import { useAuth } from "@clerk/clerk-react"
 import { Loader } from "lucide-react"
-import { disconnect } from "process"
 import { FC, useEffect, useState } from "react"
 
 type Props = {
